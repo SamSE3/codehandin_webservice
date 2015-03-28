@@ -19,7 +19,7 @@
  * May well be contain race conditions
  * Still needs to handle zip files
  *
- * @package    localcodehandinws
+ * @package    localcodehandin_webservice
  * @copyright  2011 Moodle Pty Ltd (http://moodle.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -44,7 +44,7 @@ function cleanup($id) {
     $dir = "{$CFG->dataroot}/temp/$id/";
     removeDir($dir);
 }
-class local_codehandinws_external extends external_api {
+class local_codehandin_webservice_external extends external_api {
 
     /**
      * Returns description of method parameters

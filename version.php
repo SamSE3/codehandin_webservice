@@ -21,5 +21,5 @@ $plugin->version = 2015030100;   // The (date) version of this module + 2 extra 
 // display this version number with userdate (dev friendly)
 $plugin->requires = 2010112400;  // Requires this Moodle version - at least 2.0
 $plugin->cron = 0;
-$plugin->component = 'local_codehandin';
+$plugin->component = 'local_codehandin_webservice';
 $plugin->maturity = MATURITY_ALPHA;

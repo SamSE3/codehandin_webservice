@@ -15,7 +15,7 @@ define('ASSIGNSUBMISSION_FILEAREA_TEMP', 'codehandin_temp_submission_files'); //
 define('COMPONENT', 'assignsubmission_codehandin'); //
 define('SHORT_SERIVCE_NAME', 'codehandin'); // must be the same as 'shortname' => 'codehandin' in services.php
 
-class local_codehandin {
+class local_codehandin_webservice {
     /*
      * useful functions not part of any section
      * 

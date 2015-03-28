@@ -30,7 +30,7 @@
  * 
  * re-investigate removedir
  *
- * @package    localcodehandinws
+ * @package    localcodehandin_webservice
  * @copyright  2014 Moodle Pty Ltd (http://moodle.com) & Samuel Deane & Jonathan Mackenzie
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -39,7 +39,7 @@ require_once($CFG->dirroot . "/mod/assign/externallib.php"); // get submission f
 require_once($CFG->dirroot . "/mod/assign/locallib.php");
 require_once($CFG->libdir . "/enrollib.php"); // to get courses
 require_once($CFG->libdir . "/filestorage/zip_packer.php");
-require_once($CFG->dirroot . "/local/codehandinws/locallib.php"); // add the web service libary
+require_once($CFG->dirroot . "/local/codehandin_webservice/locallib.php"); // add the web service libary
 
 /**
  * test if a object's module name is assign
@@ -54,7 +54,7 @@ function isAssign($obj) {
  * extends the external API with the code handin web services functions 
  * @todo rename all create, update and delete methods as plurals i.e. create_tests_
  */
-class local_codehandinws_external extends external_api {
+class local_codehandin_webservice_external extends external_api {
     ///////////////////////////////////////////////////////////////////////////
     //// private helper functions
     ///////////////////////////////////////////////////////////////////////////
@@ -192,7 +192,7 @@ class local_codehandinws_external extends external_api {
         $out = new stdClass();
         $ignoreWarnings = false;
         if (empty($assignmentids) || !$assignmentids) {
-            $assignmentids = local_codehandinws_local::getAccessableAssignmentids();
+            $assignmentids = local_codehandin_webservice::getAccessableAssignmentids();
             if (!$assignmentids) {
                 $warnings = array();
                 $warnings[] = array(
@@ -210,7 +210,7 @@ class local_codehandinws_external extends external_api {
         if (empty($data->assignmentids)) {
             return $data;
         }
-        $out = local_codehandinws_local::fetch_assignments_raw($data->assignmentids, $data->contextids, $basic); // only get the assignments that passed validation
+        $out = local_codehandin_webservice::fetch_assignments_raw($data->assignmentids, $data->contextids, $basic); // only get the assignments that passed validation
         return $out;
     }
 
@@ -488,15 +488,15 @@ class local_codehandinws_external extends external_api {
         $submit = $info->submit;
         $test = $info->test;
         //return " assignmentid $assignmentid draftid $draftid submit $submit";
-        //$out = local_codehandinws_local::get_testing_info($assignmentid, $submit, true);
-        $out = local_codehandinws_local::set_and_submit_submission($assignmentid, $draftid, false, $submit);
+        //$out = local_codehandin_webservice::get_testing_info($assignmentid, $submit, true);
+        $out = local_codehandin_webservice::set_and_submit_submission($assignmentid, $draftid, false, $submit);
 //        if ($submit) {
-//            $aout = local_codehandinws_local::test_submission(true);
+//            $aout = local_codehandin_webservice::test_submission(true);
 //            if ($test) {
 //                return $aout;
 //            }
 //        } else if ($test) { // test but not submit
-//            $out = local_codehandinws_local::test_submission(false);
+//            $out = local_codehandin_webservice::test_submission(false);
 //        }
         return $out;
     }
@@ -545,7 +545,7 @@ class local_codehandinws_external extends external_api {
      * @return json_Object a json object containing any errors or the id of the new checkpoint
      */
     public static function update_codehandin($codehandin) {
-        return json_encode(local_codehandinws_local::update_codehandin(json_decode($codehandin)));
+        return json_encode(local_codehandin_webservice::update_codehandin(json_decode($codehandin)));
     }
 
     /**
