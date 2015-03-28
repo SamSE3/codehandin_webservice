@@ -74,9 +74,10 @@ $functions = array(
         'type' => 'write',
         'capabilities' => 'mod/assign:submit',
     ),
-    'local_codehandin_webservice_insert_or_update_codehandin' => array(
+    //Updating services
+    'local_codehandin_webservice_update_codehandin' => array(
         'classname' => 'local_codehandin_webservice_external',
-        'methodname' => 'insert_or_update_codehandin',
+        'methodname' => 'update_codehandin',
         'classpath' => 'local/codehandin_webservice/externallib.php',
         'description' => 'Updates a CodeHandIn to match the provided '
         . 'JSONObject and test files.',
@@ -87,10 +88,10 @@ $functions = array(
 
 // define the service
 $services = array(
-    'Codehandin Service' => array(
+    'Codehandin web service' => array(
         'functions' => array_keys($functions),
         'restrictedusers' => 0,
-        'shortname' => 'Codehandin Webservice',
+        'shortname' => 'codehandin_ws',
         'enabled' => 1,
         'downloadfiles' => 1,
         'uploadfiles' => 1
