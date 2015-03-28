@@ -28,56 +28,56 @@
 // We defined the web service functions to install.
 $functions = array(
     //Token files
-    'local_codehandinws_create_student_tokens' => array(
-        'classname' => 'local_codehandinws_external',
+    'local_codehandin_create_student_tokens' => array(
+        'classname' => 'local_codehandin_external',
         'methodname' => 'create_student_tokens',
-        'classpath' => 'local/codehandinws/externallib.php',
+        'classpath' => 'local/codehandin/externallib.php',
         'description' => 'create tokens for students to use to access this '
         . 'web service',
         'type' => 'read',
         'capabilities' => 'mod/assign:addinstance',
     ),
     //Fetching Services
-    'local_codehandinws_fetch_assignments' => array(
-        'classname' => 'local_codehandinws_external',
+    'local_codehandin_fetch_assignments' => array(
+        'classname' => 'local_codehandin_external',
         'methodname' => 'fetch_assignments',
-        'classpath' => 'local/codehandinws/externallib.php',
+        'classpath' => 'local/codehandin/externallib.php',
         'description' => 'Return all or only the basic details of all or one '
         . 'of the available assignments for a specified user.',
         'type' => 'read',
         'capabilities' => 'mod/assign:view',
     ),
-    'local_codehandinws_fetch_assignment_file_list' => array(
-        'classname' => 'local_codehandinws_external',
+    'local_codehandin_fetch_assignment_file_list' => array(
+        'classname' => 'local_codehandin_external',
         'methodname' => 'fetch_assignment_file_list',
-        'classpath' => 'local/codehandinws/externallib.php',
+        'classpath' => 'local/codehandin/externallib.php',
         'description' => 'Return any files provided for an assignment',
         'type' => 'read',
         'capabilities' => 'mod/assign:view',
     ),
-    'local_codehandinws_fetch_submission_file_list' => array(
-        'classname' => 'local_codehandinws_external',
+    'local_codehandin_fetch_submission_file_list' => array(
+        'classname' => 'local_codehandin_external',
         'methodname' => 'fetch_submission_file_list',
-        'classpath' => 'local/codehandinws/externallib.php',
+        'classpath' => 'local/codehandin/externallib.php',
         'description' => 'Return files submitted for an assignment',
         'type' => 'read',
         'capabilities' => 'mod/assign:view',
     ),
     //Testing Services
-    'local_codehandinws_set_and_test_submission' => array(
-        'classname' => 'local_codehandinws_external',
+    'local_codehandin_set_and_test_submission' => array(
+        'classname' => 'local_codehandin_external',
         'methodname' => 'set_and_test_submission',
-        'classpath' => 'local/codehandinws/externallib.php',
+        'classpath' => 'local/codehandin/externallib.php',
         'description' => 'Upload a submission to Moodle with an option to '
         . 'test and or make the final submission. also transfers files from '
         . 'the user filearea to assignsubmission_file',
         'type' => 'write',
         'capabilities' => 'mod/assign:submit',
     ),
-    'local_codehandinws_insert_or_update_codehandin' => array(
-        'classname' => 'local_codehandinws_external',
+    'local_codehandin_insert_or_update_codehandin' => array(
+        'classname' => 'local_codehandin_external',
         'methodname' => 'insert_or_update_codehandin',
-        'classpath' => 'local/codehandinws/externallib.php',
+        'classpath' => 'local/codehandin/externallib.php',
         'description' => 'Updates a CodeHandIn to match the provided '
         . 'JSONObject and test files.',
         'type' => 'write',
@@ -90,7 +90,7 @@ $services = array(
     'Codehandin Service' => array(
         'functions' => array_keys($functions),
         'restrictedusers' => 0,
-        'shortname' => 'codehandin',
+        'shortname' => 'Codehandin webservice',
         'enabled' => 1,
         'downloadfiles' => 1,
         'uploadfiles' => 1
