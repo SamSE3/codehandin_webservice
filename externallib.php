@@ -173,6 +173,7 @@ class local_codehandin_webservice_external extends external_api {
         return new external_function_parameters(//
                 array(
             'basic' => new external_value(PARAM_BOOL, 'return basic details only', VALUE_OPTIONAL, false),
+            'getproglangs' => new external_value(PARAM_BOOL, 'get programming language ids and names as well', VALUE_OPTIONAL, false),
             'assignmentids' => new external_multiple_structure(
                     new external_value(PARAM_INT, 'return details of a specific assignment by its id')
                     , 'list of assignment ids', VALUE_OPTIONAL, false)
@@ -188,7 +189,7 @@ class local_codehandin_webservice_external extends external_api {
      * @return jsonObject of the assignments the user has
      * @todo maybe cache the assignment details rather than recreating the assignment every time
      */
-    public static function fetch_assignments($basic, $assignmentids = false) {
+    public static function fetch_assignments($basic, $getproglangs = false, $assignmentids = false) {
         $out = new stdClass();
         $ignoreWarnings = false;
         if (empty($assignmentids) || !$assignmentids) {
@@ -211,6 +212,9 @@ class local_codehandin_webservice_external extends external_api {
             return $data;
         }
         $out = local_codehandin_webservice::fetch_assignments_raw($data->assignmentids, $data->contextids, $basic); // only get the assignments that passed validation
+        if ($getproglangs) {
+            $out->proglangs = array_values(local_codehandin_webservice::getProglangs());
+        }
         return $out;
     }
 
@@ -251,7 +255,7 @@ class local_codehandin_webservice_external extends external_api {
                     'checkpoints' => new external_multiple_structure(
                             new external_single_structure(
                             array(
-                        'tempid' => new external_value(PARAM_TEXT, 'function name', VALUE_OPTIONAL),
+                        'tempid' => new external_value(PARAM_TEXT, 'function name', VALUE_OPTIONAL), // not sure what this is
                         'id' => new external_value(PARAM_INT, 'function name', VALUE_OPTIONAL),
                         //'assignmentid' => new external_value(PARAM_INT, 'function name'),
                         'name' => new external_value(PARAM_TEXT, 'function name'),
@@ -261,7 +265,7 @@ class local_codehandin_webservice_external extends external_api {
                         'tests' => new external_multiple_structure(
                                 new external_single_structure(
                                 array(
-                            'tempid' => new external_value(PARAM_TEXT, 'function name', VALUE_OPTIONAL),
+                            'tempid' => new external_value(PARAM_TEXT, 'function name', VALUE_OPTIONAL), // not sure what this is
                             'id' => new external_value(PARAM_INT, 'function name', VALUE_OPTIONAL),
                             'status' => new external_value(PARAM_BOOL, 'function name'),
                             'description' => new external_value(PARAM_RAW, 'function name'),
@@ -281,7 +285,14 @@ class local_codehandin_webservice_external extends external_api {
                         )
                         ), 'the codehandin Assignments', VALUE_OPTIONAL) // there may be no assignments
                     )
-                    ), 'the codehandin Assignments', VALUE_OPTIONAL) // there may be no assignments so no courses
+                    ), 'the codehandin Assignments', VALUE_OPTIONAL), // there may be no assignments so no courses
+            'proglangs' => new external_multiple_structure(
+                    new external_single_structure(
+                    array(
+                'id' => new external_value(PARAM_INT, 'function name'),
+                'name' => new external_value(PARAM_TEXT, 'function name')
+                    )
+                    ), 'list of programming languages', VALUE_OPTIONAL)
                 )
         );
     }
@@ -482,7 +493,7 @@ class local_codehandin_webservice_external extends external_api {
      * @return boolean
      */
     public static function set_and_test_submission($submissioninfo) {
-        $info = json_decode($submissioninfo);        
+        $info = json_decode($submissioninfo);
         $assignmentid = $info->assignmentid;
         $draftid = $info->draftid;
         $submit = $info->submit;

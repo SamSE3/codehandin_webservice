@@ -252,6 +252,12 @@ class local_codehandin_webservice {
 //// manipulate Codehandin checkpoints and tests
 ///////////////////////////////////////////////////////////////////////////   
 
+    public static function getProglangs() {
+        global $DB;
+        $sql = "SELECT id,name FROM {codehandin_proglang} ";
+        return $DB->get_records_sql($sql);
+    }
+
     private static function get_test_update_info($assignmentid) {
         global $DB;
         $sql = "SELECT t.id AS tid, t.gradeonly, t.input, t.output, t.outputerr"
@@ -920,7 +926,7 @@ class local_codehandin_webservice {
      */
     public static function set_and_submit_submission($assignmentid, $draftid, $test, $submit) {
         global $USER, $DB;
-        
+
         $output = array();
         $userid = $USER->id;
 
@@ -983,7 +989,7 @@ class local_codehandin_webservice {
             $data->submissionstatement = 'y'; // just in case tell them we accept the submission statement (submissionstatement just shouldn't be empty)
         }
         $notices = array(); // for output messages from submit for grading
-        $data->codehandin_test=$test; // pass it to the codehandin plugin to do the testing
+        $data->codehandin_test = $test; // pass it to the codehandin plugin to do the testing
         if ($submit) {
             $assign->save_submission($data, $notices);
         } else {
